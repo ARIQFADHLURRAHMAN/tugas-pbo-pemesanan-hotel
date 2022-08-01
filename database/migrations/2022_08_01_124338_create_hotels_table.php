@@ -15,10 +15,6 @@ class CreateHotelsTable extends Migration
     {
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
-            $table->sting('jeniskamar');
-            $table->sting('kamar');
-            $table->sting('fasilitaskamar');
-            $table->date('tanggalpemesanan');
             $table->timestamps();
         });
     }
