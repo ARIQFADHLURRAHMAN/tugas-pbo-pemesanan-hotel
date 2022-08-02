@@ -14,7 +14,7 @@ use App\Http\Controllers\KamarController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/i', function () {
     return view('layout.main');
 });
 
