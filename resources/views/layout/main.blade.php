@@ -68,7 +68,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="nav-item">
                 <a href="/" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Data Kamar</p>
+                  <p> Kamar</p>
                 </a>
               </li>
             </ul>
@@ -78,7 +78,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="nav-item">
                 <a href="/" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p></p>
+                  <p>fasilitas umum</p>
                 </a>
               </li>
             </ul>
@@ -88,7 +88,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="nav-item">
                 <a href="/" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>DA</p>
+                  <p>fasilitas hotel</p>
                 </a>
               </li>
             </ul>
