@@ -14,8 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::apiResource('/kamar', App\Http\Controllers\Api\KamarController::class);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 //posts
-Route::apiResource('/kamar', App\Http\Controllers\Api\KamarController::class);
+// Route::apiResource('/kamar', App\Http\Controllers\Api\KamarController::class);

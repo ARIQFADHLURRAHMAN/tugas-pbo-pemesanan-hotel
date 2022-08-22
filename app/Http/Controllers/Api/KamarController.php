@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Post;
+use App\Models\Kamar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PostResource;
+use App\Http\Resources\KamarResource;
 use Illuminate\Support\Facades\Validator;
 
-class PostController extends Controller
+class KamarController extends Controller
 {    
     /**
      * index
@@ -18,10 +18,10 @@ class PostController extends Controller
     public function index()
     {
         //get posts
-        $posts = Post::latest()->paginate(5);
+        $kamar = Kamar::latest()->paginate(5);
 
         //return collection of posts as a resource
-        return new PostResource(true, 'List Data Posts', $posts);
+        return new KamarResource(true, 'List Data Posts', $kamar);
     }
     
     /**
@@ -34,33 +34,104 @@ class PostController extends Controller
     {
         //define validation rules
         $validator = Validator::make($request->all(), [
-            'jenis kamar'=> 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'fasilitasnkamar'=> 'required',
+            'jeniskamar'=> 'required',
+            'fasilitaskamar'=> 'required',
             'reservasi'=> 'required',
             'harga'=> 'required',
         ]);
-
-
-
-        
 
         //check if validation fails
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-        //upload image
-        $image = $request->file('image');
-        $image->storeAs('public/posts', $image->hashName());
-
         //create post
-        $kamar = Post::create([
-            'jenis kamar'=> $image->hashName(),
-            'fasilitas kamar'=> $request->title,
-            'reservasi'=> $request->content,
-            'harga'=> $request->content,
+        $kamar = Kamar::create([
+            'jeniskamar'=> $request->jeniskamar,
+            'fasilitaskamar'=> $request->fasilitaskamar,
+            'reservasi'=> $request->reservasi,
+            'harga'=> $request->harga,
         ]);
         //return response
-        return new KamarResource(true, 'Data Post Berhasil Ditambahkan!', $post);
+        return new KamarResource(true, 'Data Post Berhasil Ditambahkan!', $kamar);
+    }
+
+    /**
+     * show
+     *
+     * @param  mixed $post
+     * @return void
+     */
+    public function show(Kamar $kamar)
+    {
+        //return single post as a resource
+        return new KamarResource(true, 'Data Post Ditemukan!', $kamar);
+    }
+
+    /**
+     * update
+     *
+     * @param  mixed $request
+     * @param  mixed $post
+     * @return void
+     */
+    public function update(Request $request, Kamar $kamar)
+    {
+        //define validation rules
+        $validator = Validator::make($request->all(), [
+            'jeniskamar'=> 'required',
+            'fasilitaskamar'=> 'required',
+            'reservasi'=> 'required',
+            'harga'=> 'required',
+        ]);
+
+        //check if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        //check if image is not empty
+        if ($request->hasFile('image')) {
+
+            //upload image
+            // $image = $request->file('image');
+            // $image->storeAs('public/posts', $image->hashName());
+
+            //delete old image
+            // Storage::delete('public/posts/'.$post->image);
+
+            //update post with new image
+            $kamar->update([
+                'jeniskamar'=> $request->jeniskamar,
+                'fasilitaskamar'=> $request->fasilitaskamar,
+                'reservasi'=> $request->reservasi,
+                'harga'=> $request->harga,
+            ]);
+
+        } else {
+
+            //update post without image
+            $kamar->update([
+                'jeniskamar'=> $request->jeniskamar,
+            'fasilitaskamar'=> $request->fasilitaskamar,
+            'reservasi'=> $request->reservasi,
+            'harga'=> $request->harga,
+            ]);
+        }
+
+        //return response
+        return new KamarResource(true, 'Data Post Berhasil Diubah!', $kamar);
+    }
+
+    public function destroy(Kamar $kamar)
+    {
+        //delete image
+        // Storage::delete('public/posts/'.$post->image);
+
+        //delete post
+        $kamar->delete();
+
+        //return response
+        return new KamarResource(true, 'Data Post Berhasil Dihapus!', null);
     }
 }
