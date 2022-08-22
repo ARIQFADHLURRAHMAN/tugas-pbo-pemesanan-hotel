@@ -8,4 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class kamar extends Model
 {
     use HasFactory;
+
+    /**
+     * fillable
+     *
+     * @var array
+     */
+
+    
+    protected $table = 'kamars';
+    
+    protected $fillable = [
+        'jeniskamar',
+        'fasilitaskamar',
+        'reservasi',
+        'harga',
+    ];
 }
